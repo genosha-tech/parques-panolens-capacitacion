@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <title>Panolens.js panorama image panorama</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            color: white;
+        }
+        
+        .main-description {
+            display: none;
+            background-color: #000;
+        }
+        
+        a:link,
+        a:visited {
+            color: #bdc3c7;
+        }
+        
+        .credit {
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            padding: 20px 0;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="credit">#03 Teleport</div>
+    <div class="main-description">
+        <h1> Esto es un contendor!</h1>
+    </div>
+    <script src="resources/three.min.js"></script>
+    <script src="panolens.min.js"></script>
+
+    <script>
+        var img01 = 'https://gen360dev.z13.web.core.windows.net/glaciares/photos/360/PN_G_N0_MENU_8K.jpg';
+        var img02 = 'https://gen360dev.z13.web.core.windows.net/glaciares/photos/360/PN_G_N2_MENU_Caminata%201%20Grieta_VID_20201216_114941_V02_8K.jpg';
+        var img03 = 'https://gen360dev.z13.web.core.windows.net/glaciares/photos/360/PN_G_N2_Caminata%202%20Entorno_VID_20210118_113519_V04_8K.jpg';
+        const panorama01 = new PANOLENS.ImagePanorama(img01);
+        const panorama02 = new PANOLENS.ImagePanorama(img02);
+        const viewer = new PANOLENS.Viewer({
+            output: 'console'
+        });
+
+
+        var infospot, infospot2;
+
+        infospot = new PANOLENS.Infospot();
+        infospot.position.set(-522.05, -579.58, -4934.71);
+        infospot.addHoverText('The Where Is Bar');
+
+        infospot2 = new PANOLENS.Infospot(300, PANOLENS.DataImage.Info);
+        infospot2.position.set(-5000.00, -1825.25, 197.56);
+        infospot2.addHoverElement(document.querySelector('.main-description'), 200);
+        infospot2 // Attach event listeners
+        infospot2.addEventListener('click', function() {
+            console.log('click');
+            // viewer.remove(panorama01);
+
+        });
+
+        // infospot2.addEventListener( 'hover', this.onHover );
+        // infospot2.addEventListener( 'hoverenter', this.onHoverStart );
+        // tinfospot2his.addEventListener( 'hoverleave', this.onHoverEnd );
+        // infospot2.addEventListener( 'panolens-dual-eye-effect', this.onDualEyeEffect );
+        // infospot2.addEventListener( 'panolens-container', this.setContainer.bind( this ) );
+        // infospot2.addEventListener( 'dismiss', this.onDismiss );
+        // infospot2.addEventListener( 'panolens-infospot-focus', this.setFocusMethod );
+        panorama01.add(infospot);
+        panorama01.add(infospot2);
+
+        viewer.add(panorama01);
+        viewer.add(panorama02);
+
+        panorama01.link(panorama02, new THREE.Vector3(-3254.77, -247.95, -3776.80));
+
+        panorama02.link(panorama01, new THREE.Vector3(2987.50, -482.68, -3972.20));
+    </script>
+
+</body>
+
+</html>
